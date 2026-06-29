@@ -2196,3 +2196,66 @@ textarea.form-control {
     flex: 0 0 80px;
   }
 }
+
+/* Sticky Mobile Booking Bar & Layout Overrides */
+.mobile-booking-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-book-btn {
+    display: none !important;
+  }
+  
+  .back-to-top {
+    bottom: 95px !important; /* Move higher to not overlap the booking bar */
+  }
+
+  .mobile-booking-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    background-color: rgba(25, 57, 45, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(201, 154, 85, 0.3);
+    z-index: 990; /* Keep underneath fullscreen lightboxes */
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .m-booking-price {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-price-lbl {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+  }
+
+  .m-price-val {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+
+  .m-price-unit {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+
+  .m-booking-btn {
+    padding: 12px 24px !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.5px !important;
+  }
+}
