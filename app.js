@@ -529,6 +529,43 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize gallery view
   filterGallery('all');
 
+  // ==========================================================================
+  // About Section — Auto-Fading Slideshow Controller
+  // ==========================================================================
+  const aboutSlides = document.querySelectorAll('.about-slide');
+  const aboutDots = document.querySelectorAll('.about-dot');
+  let aboutCurrentIdx = 0;
+  let aboutInterval = null;
+
+  const goToAboutSlide = (idx) => {
+    aboutSlides.forEach(s => s.classList.remove('active'));
+    aboutDots.forEach(d => d.classList.remove('active'));
+    aboutCurrentIdx = idx;
+    if (aboutSlides[idx]) aboutSlides[idx].classList.add('active');
+    if (aboutDots[idx]) aboutDots[idx].classList.add('active');
+  };
+
+  const nextAboutSlide = () => {
+    const next = (aboutCurrentIdx + 1) % aboutSlides.length;
+    goToAboutSlide(next);
+  };
+
+  // Wire dot click
+  aboutDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = parseInt(dot.getAttribute('data-slide'), 10);
+      goToAboutSlide(target);
+      // Reset timer so it doesn't jump immediately after click
+      clearInterval(aboutInterval);
+      aboutInterval = setInterval(nextAboutSlide, 4000);
+    });
+  });
+
+  // Start auto-cycling
+  if (aboutSlides.length > 1) {
+    aboutInterval = setInterval(nextAboutSlide, 4000);
+  }
+
   // Prev / Next button actions
   if (prevBtn) {
     prevBtn.addEventListener('click', (e) => {

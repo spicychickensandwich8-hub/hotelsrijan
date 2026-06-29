@@ -587,33 +587,106 @@ section[id] {
   position: relative;
 }
 
-.about-img-main {
+/* About Slideshow */
+.about-slideshow {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
   border-radius: var(--radius-md);
+  overflow: hidden;
   box-shadow: var(--shadow-lg);
-  width: 85%;
-  height: 450px;
-  object-fit: cover;
+  border: 1px solid var(--border-color);
 }
 
-.about-img-sub {
+.about-slide {
   position: absolute;
-  bottom: -40px;
-  right: 0;
-  width: 45%;
-  height: 250px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: var(--radius-md);
-  border: 8px solid var(--bg-main);
-  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+}
+
+.about-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Dot Indicators */
+.about-slide-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+}
+
+.about-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-dot:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.about-dot.active {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.25);
+  box-shadow: 0 0 8px rgba(201, 154, 85, 0.5);
+}
+
+/* Floating Stats Badge */
+.about-stats-badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  background-color: rgba(25, 57, 45, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(201, 154, 85, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-stats-line {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+}
+
+.about-stats-divider {
+  color: var(--accent);
+  font-size: 0.6rem;
 }
 
 @media (max-width: 768px) {
-  .about-img-main {
-    width: 100%;
-    height: 300px;
+  .about-slideshow {
+    aspect-ratio: 16 / 10;
   }
-  .about-img-sub {
-    display: none;
+  .about-stats-badge {
+    top: 12px;
+    right: 12px;
+    padding: 8px 12px;
+  }
+  .about-stats-line {
+    font-size: 0.7rem;
   }
 }
 
