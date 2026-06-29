@@ -4,24 +4,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Header Scroll Style Toggle
   // ==========================================================================
   const header = document.getElementById('header');
+  const backToTopBtn = document.getElementById('back-to-top');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const spySections = document.querySelectorAll('section[id], header[id]');
   
   const handleScroll = () => {
+    // 1. Header background styling
     if (window.scrollY > 50) {
       header.classList.add('header-scrolled');
     } else {
       header.classList.remove('header-scrolled');
     }
+    
+    // 2. Back to top button visibility
+    if (backToTopBtn) {
+      if (window.scrollY > 400) {
+        backToTopBtn.classList.add('active');
+      } else {
+        backToTopBtn.classList.remove('active');
+      }
+    }
+
+    // 3. Scroll Spy Navigation Highlight
+    let currentSectionId = 'home';
+    const scrollPos = window.scrollY + 120; // offset for sticky navigation header
+    
+    spySections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        currentSectionId = section.getAttribute('id');
+      }
+    });
+    
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      if (href === `#${currentSectionId}`) {
+        link.classList.add('active');
+      }
+    });
   };
   
   window.addEventListener('scroll', handleScroll);
   handleScroll(); // Check immediately on load
+
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  }
 
   // ==========================================================================
   // 2. Mobile Navigation Hamburger Menu
   // ==========================================================================
   const hamburger = document.getElementById('hamburger');
   const navMenu = document.getElementById('nav-menu');
-  const navLinks = document.querySelectorAll('.nav-link');
   
   const toggleMobileMenu = () => {
     hamburger.classList.toggle('active');
