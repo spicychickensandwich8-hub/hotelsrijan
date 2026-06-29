@@ -383,6 +383,14 @@ section[id] {
     display: flex;
   }
   
+  .nav-book-btn {
+    display: none !important;
+  }
+
+  .nav-actions {
+    gap: 12px;
+  }
+
   .nav-menu {
     position: fixed;
     top: 0;
@@ -2202,13 +2210,14 @@ textarea.form-control {
   display: none;
 }
 
-@media (max-width: 768px) {
-  .nav-book-btn {
-    display: none !important;
-  }
-  
+/* Prevent Book Now from wrapping on desktop */
+.nav-book-btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
   .back-to-top {
-    bottom: 95px !important; /* Move higher to not overlap the booking bar */
+    bottom: 95px !important;
   }
 
   .mobile-booking-bar {
@@ -2217,34 +2226,37 @@ textarea.form-control {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 75px;
-    background-color: rgba(25, 57, 45, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    height: 70px;
+    background-color: rgba(25, 57, 45, 0.97);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid rgba(201, 154, 85, 0.3);
-    z-index: 990; /* Keep underneath fullscreen lightboxes */
+    z-index: 990;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    padding: 0 20px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
   }
 
   .m-booking-price {
     display: flex;
     flex-direction: column;
+    gap: 2px;
   }
 
   .m-price-lbl {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     color: var(--accent);
+    font-weight: 500;
   }
 
   .m-price-val {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-light);
+    line-height: 1;
   }
 
   .m-price-unit {
@@ -2254,8 +2266,20 @@ textarea.form-control {
   }
 
   .m-booking-btn {
-    padding: 12px 24px !important;
+    padding: 12px 28px !important;
     font-size: 0.8rem !important;
-    letter-spacing: 0.5px !important;
+    letter-spacing: 1px !important;
+    white-space: nowrap;
+    border-radius: var(--radius-sm) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-booking-bar {
+    padding: 0 16px;
+  }
+  .m-booking-btn {
+    padding: 10px 20px !important;
+    font-size: 0.75rem !important;
   }
 }
