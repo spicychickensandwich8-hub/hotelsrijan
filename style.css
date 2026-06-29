@@ -591,11 +591,13 @@ section[id] {
 .about-slideshow {
   position: relative;
   width: 100%;
+  min-height: 400px;
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border-color);
+  background-color: #0c1713;
 }
 
 .about-slide {
@@ -676,9 +678,17 @@ section[id] {
   font-size: 0.6rem;
 }
 
+@media (max-width: 992px) {
+  .about-slideshow {
+    aspect-ratio: 16 / 10;
+    min-height: 280px;
+  }
+}
+
 @media (max-width: 768px) {
   .about-slideshow {
     aspect-ratio: 16 / 10;
+    min-height: 240px;
   }
   .about-stats-badge {
     top: 12px;
@@ -687,6 +697,13 @@ section[id] {
   }
   .about-stats-line {
     font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-slideshow {
+    aspect-ratio: 3 / 2;
+    min-height: 200px;
   }
 }
 
