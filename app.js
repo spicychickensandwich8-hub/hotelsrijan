@@ -405,22 +405,129 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Wire standard Photo Gallery grid images to work as a slideshow of visible photos
-  const galleryImages = document.querySelectorAll('.gallery-img');
-  galleryImages.forEach(img => {
-    img.addEventListener('click', () => {
-      // Find all currently visible cards in gallery
-      const visibleCards = Array.from(document.querySelectorAll('.gallery-item-card'))
-        .filter(card => card.style.display !== 'none');
+  // ==========================================================================
+  // Widescreen Gallery Slider Controller (Option 1)
+  // ==========================================================================
+  const activeImg = document.getElementById('gallery-active-img');
+  const activeCatBadge = document.getElementById('gallery-active-cat');
+  const activeTitle = document.getElementById('gallery-active-title');
+  const galleryPrev = document.getElementById('gallery-prev');
+  const galleryNext = document.getElementById('gallery-next');
+  const galleryZoom = document.getElementById('gallery-zoom-btn');
+  const galleryFilterBtns = document.querySelectorAll('.gallery-filter-btn');
+  const thumbCards = document.querySelectorAll('.thumb-card');
+
+  let activeVisibleThumbs = [];
+
+  const updateGalleryViewport = (card) => {
+    if (!card || !activeImg) return;
+    
+    // Fade out effect
+    activeImg.style.opacity = '0.3';
+    
+    setTimeout(() => {
+      const src = card.getAttribute('data-img-src');
+      const cat = card.getAttribute('data-cat');
+      const title = card.getAttribute('data-title');
       
-      const visibleSources = visibleCards.map(card => card.querySelector('.gallery-img').getAttribute('src'));
-      const activeIdx = visibleSources.indexOf(img.getAttribute('src'));
+      activeImg.src = src;
+      activeImg.alt = title;
+      if (activeCatBadge) activeCatBadge.textContent = cat;
+      if (activeTitle) activeTitle.textContent = title;
+      
+      // Update active state in thumbnail list
+      thumbCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      
+      // Scroll thumb into view
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      
+      activeImg.style.opacity = '1';
+    }, 150);
+  };
+
+  const filterGallery = (filterValue) => {
+    activeVisibleThumbs = [];
+    
+    thumbCards.forEach(card => {
+      const cat = card.getAttribute('data-cat');
+      if (filterValue === 'all' || cat === filterValue) {
+        card.classList.remove('hidden');
+        activeVisibleThumbs.push(card);
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Select first card in filtered list
+    if (activeVisibleThumbs.length > 0) {
+      updateGalleryViewport(activeVisibleThumbs[0]);
+    }
+  };
+
+  // Wire filter button click
+  galleryFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      galleryFilterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const filter = btn.getAttribute('data-gallery-filter');
+      filterGallery(filter);
+    });
+  });
+
+  // Wire thumbnail card click
+  thumbCards.forEach(card => {
+    card.addEventListener('click', () => {
+      updateGalleryViewport(card);
+    });
+  });
+
+  // Wire slider arrow keys
+  if (galleryPrev) {
+    galleryPrev.addEventListener('click', () => {
+      if (activeVisibleThumbs.length === 0) return;
+      const currentActive = document.querySelector('.thumb-card.active');
+      let idx = activeVisibleThumbs.indexOf(currentActive);
+      idx = (idx - 1 + activeVisibleThumbs.length) % activeVisibleThumbs.length;
+      updateGalleryViewport(activeVisibleThumbs[idx]);
+    });
+  }
+
+  if (galleryNext) {
+    galleryNext.addEventListener('click', () => {
+      if (activeVisibleThumbs.length === 0) return;
+      const currentActive = document.querySelector('.thumb-card.active');
+      let idx = activeVisibleThumbs.indexOf(currentActive);
+      idx = (idx + 1) % activeVisibleThumbs.length;
+      updateGalleryViewport(activeVisibleThumbs[idx]);
+    });
+  }
+
+  // Wire zoom full screen trigger
+  if (galleryZoom) {
+    galleryZoom.addEventListener('click', () => {
+      if (activeVisibleThumbs.length === 0) return;
+      const visibleSources = activeVisibleThumbs.map(thumb => thumb.getAttribute('data-img-src'));
+      const currentActive = document.querySelector('.thumb-card.active');
+      const activeIdx = activeVisibleThumbs.indexOf(currentActive);
       
       openGallery(visibleSources, false);
       currentGalleryIndex = activeIdx !== -1 ? activeIdx : 0;
       updateLightboxImage();
     });
-  });
+    
+    // Make active main image also zoomable on click
+    if (activeImg) {
+      activeImg.style.cursor = 'zoom-in';
+      activeImg.addEventListener('click', () => {
+        galleryZoom.click();
+      });
+    }
+  }
+
+  // Initialize gallery view
+  filterGallery('all');
 
   // Prev / Next button actions
   if (prevBtn) {

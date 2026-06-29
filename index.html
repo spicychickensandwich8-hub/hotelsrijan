@@ -426,60 +426,111 @@
       <button class="gallery-filter-btn" data-gallery-filter="dining">Dining</button>
     </div>
 
-    <!-- Gallery Grid -->
-    <div class="gallery-grid fade-in-section" id="gallery-grid">
-      <!-- Item 1 -->
-      <div class="gallery-item-card" data-gallery-cat="rooms">
-        <div class="gallery-img-wrap">
-          <img src="images/room1.jpg" alt="Hotel Srijan Room 1" class="gallery-img" loading="lazy">
+    <!-- Gallery Slider Component (Option 1) -->
+    <div class="gallery-slider-wrap fade-in-section">
+      <!-- Main Widescreen Viewport -->
+      <div class="gallery-viewport">
+        <img id="gallery-active-img" src="images/room1.jpg" alt="Active Gallery Image">
+        
+        <!-- Viewport Controls -->
+        <button class="gallery-slider-arrow prev" id="gallery-prev" aria-label="Previous image">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="gallery-slider-arrow next" id="gallery-next" aria-label="Next image">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+        
+        <!-- Zoom Overlay Button -->
+        <button class="gallery-zoom-trigger" id="gallery-zoom-btn" title="View Fullscreen" aria-label="View Fullscreen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+        </button>
+
+        <!-- Active Caption Overlay -->
+        <div class="gallery-caption-overlay">
+          <span class="gallery-category-badge" id="gallery-active-cat">Rooms</span>
+          <p class="gallery-caption-text" id="gallery-active-title">Deluxe Double Room Interior</p>
         </div>
       </div>
-      <!-- Item 2 -->
-      <div class="gallery-item-card" data-gallery-cat="rooms">
-        <div class="gallery-img-wrap">
-          <img src="images/room2.png" alt="Hotel Srijan Room 2" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 3 -->
-      <div class="gallery-item-card" data-gallery-cat="rooms">
-        <div class="gallery-img-wrap">
-          <img src="images/room3.png" alt="Hotel Srijan Room 3" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 4 -->
-      <div class="gallery-item-card" data-gallery-cat="bathrooms">
-        <div class="gallery-img-wrap">
-          <img src="images/bathroom1.jpg" alt="Hotel Srijan Bathroom 1" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 5 -->
-      <div class="gallery-item-card" data-gallery-cat="bathrooms">
-        <div class="gallery-img-wrap">
-          <img src="images/bathroom2.png" alt="Hotel Srijan Bathroom 2" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 6 -->
-      <div class="gallery-item-card" data-gallery-cat="dining">
-        <div class="gallery-img-wrap">
-          <img src="images/restaurant.jpg" alt="Hotel Srijan Dining Area" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 7 -->
-      <div class="gallery-item-card" data-gallery-cat="rooms">
-        <div class="gallery-img-wrap">
-          <img src="images/room9.png" alt="Hotel Srijan Family Suite" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 8 -->
-      <div class="gallery-item-card" data-gallery-cat="bathrooms">
-        <div class="gallery-img-wrap">
-          <img src="images/bathroom4.jpg" alt="Hotel Srijan Bathroom 4" class="gallery-img" loading="lazy">
-        </div>
-      </div>
-      <!-- Item 9 -->
-      <div class="gallery-item-card" data-gallery-cat="rooms">
-        <div class="gallery-img-wrap">
-          <img src="images/room13.jpg" alt="Hotel Srijan Deluxe Bedding" class="gallery-img" loading="lazy">
+
+      <!-- Thumbnails Scroll Container -->
+      <div class="gallery-thumbnails-wrap">
+        <div class="gallery-thumbnails" id="gallery-thumbnails">
+          <!-- Item 1 -->
+          <div class="thumb-card active" data-img-src="images/room1.jpg" data-cat="rooms" data-title="Deluxe Double Room - Setup">
+            <img src="images/room1.jpg" alt="Room 1" loading="lazy">
+          </div>
+          <!-- Item 2 -->
+          <div class="thumb-card" data-img-src="images/room2.png" data-cat="rooms" data-title="Deluxe Double Room - Perspective">
+            <img src="images/room2.png" alt="Room 2" loading="lazy">
+          </div>
+          <!-- Item 3 -->
+          <div class="thumb-card" data-img-src="images/room3.png" data-cat="rooms" data-title="Superior Room - Layout">
+            <img src="images/room3.png" alt="Room 3" loading="lazy">
+          </div>
+          <!-- Item 4 -->
+          <div class="thumb-card" data-img-src="images/room4.jpg" data-cat="rooms" data-title="Deluxe Double Room - Seating Area">
+            <img src="images/room4.jpg" alt="Room 4" loading="lazy">
+          </div>
+          <!-- Item 5 -->
+          <div class="thumb-card" data-img-src="images/room5.jpg" data-cat="rooms" data-title="Deluxe Double Room - Bed Detail">
+            <img src="images/room5.jpg" alt="Room 5" loading="lazy">
+          </div>
+          <!-- Item 6 -->
+          <div class="thumb-card" data-img-src="images/room6.png" data-cat="rooms" data-title="Superior Room - Corner View">
+            <img src="images/room6.png" alt="Room 6" loading="lazy">
+          </div>
+          <!-- Item 7 -->
+          <div class="thumb-card" data-img-src="images/room8.jpg" data-cat="rooms" data-title="Family Suite - Layout">
+            <img src="images/room8.jpg" alt="Room 8" loading="lazy">
+          </div>
+          <!-- Item 8 -->
+          <div class="thumb-card" data-img-src="images/room9.png" data-cat="rooms" data-title="Family Suite - Twin Double Beds">
+            <img src="images/room9.png" alt="Room 9" loading="lazy">
+          </div>
+          <!-- Item 9 -->
+          <div class="thumb-card" data-img-src="images/room10.jpg" data-cat="rooms" data-title="Deluxe Double Room - Clean Bedding">
+            <img src="images/room10.jpg" alt="Room 10" loading="lazy">
+          </div>
+          <!-- Item 10 -->
+          <div class="thumb-card" data-img-src="images/room11.jpg" data-cat="rooms" data-title="Superior Room - Desk Setup">
+            <img src="images/room11.jpg" alt="Room 11" loading="lazy">
+          </div>
+          <!-- Item 11 -->
+          <div class="thumb-card" data-img-src="images/room12.jpg" data-cat="rooms" data-title="Family Suite - Front View">
+            <img src="images/room12.jpg" alt="Room 12" loading="lazy">
+          </div>
+          <!-- Item 12 -->
+          <div class="thumb-card" data-img-src="images/room13.jpg" data-cat="rooms" data-title="Family Suite - Bedding Corner">
+            <img src="images/room13.jpg" alt="Room 13" loading="lazy">
+          </div>
+          <!-- Item 13 -->
+          <div class="thumb-card" data-img-src="images/bathroom1.jpg" data-cat="bathrooms" data-title="Modern Western Bathroom">
+            <img src="images/bathroom1.jpg" alt="Bathroom 1" loading="lazy">
+          </div>
+          <!-- Item 14 -->
+          <div class="thumb-card" data-img-src="images/bathroom2.png" data-cat="bathrooms" data-title="Pristine Clean Bathroom">
+            <img src="images/bathroom2.png" alt="Bathroom 2" loading="lazy">
+          </div>
+          <!-- Item 15 -->
+          <div class="thumb-card" data-img-src="images/bathroom4.jpg" data-cat="bathrooms" data-title="Deluxe Suite Bathroom">
+            <img src="images/bathroom4.jpg" alt="Bathroom 4" loading="lazy">
+          </div>
+          <!-- Item 16 -->
+          <div class="thumb-card" data-img-src="images/bathroom5.jpg" data-cat="bathrooms" data-title="Superior Suite Bathroom">
+            <img src="images/bathroom5.jpg" alt="Bathroom 5" loading="lazy">
+          </div>
+          <!-- Item 17 -->
+          <div class="thumb-card" data-img-src="images/peacock-restaurant.jpg" data-cat="dining" data-title="Peacock Restaurant Dining Hall">
+            <img src="images/peacock-restaurant.jpg" alt="Peacock Restaurant" loading="lazy">
+          </div>
+          <!-- Item 18 -->
+          <div class="thumb-card" data-img-src="images/peacock-thali.jpg" data-cat="dining" data-title="Signature Peacock Special Thali">
+            <img src="images/peacock-thali.jpg" alt="Peacock Special Thali" loading="lazy">
+          </div>
+          <!-- Item 19 -->
+          <div class="thumb-card" data-img-src="images/chilli-paneer.jpg" data-cat="dining" data-title="Delicious Satvik Chilli Paneer Starter">
+            <img src="images/chilli-paneer.jpg" alt="Chilli Paneer" loading="lazy">
+          </div>
         </div>
       </div>
     </div>
