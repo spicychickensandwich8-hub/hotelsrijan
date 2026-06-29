@@ -80,6 +80,25 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', closeMobileMenu);
   });
 
+  // Logo smooth scroll and close menu logic
+  const logoElements = document.querySelectorAll('.logo');
+  logoElements.forEach(logo => {
+    logo.addEventListener('click', (e) => {
+      closeMobileMenu();
+      const homeSection = document.getElementById('home');
+      if (homeSection) {
+        e.preventDefault();
+        homeSection.scrollIntoView({ behavior: 'smooth' });
+        // Clean URL hash so it doesn't get stuck with hash links
+        if (history.pushState) {
+          history.pushState(null, null, ' ');
+        } else {
+          location.hash = '';
+        }
+      }
+    });
+  });
+
   // Close menu if user clicks outside
   document.addEventListener('click', (e) => {
     if (!navMenu.contains(e.target) && !hamburger.contains(e.target) && navMenu.classList.contains('active')) {
@@ -419,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let activeVisibleThumbs = [];
 
-  const updateGalleryViewport = (card) => {
+  const updateGalleryViewport = (card, shouldScroll = true) => {
     if (!card || !activeImg) return;
     
     // Fade out effect
@@ -440,13 +459,15 @@ document.addEventListener('DOMContentLoaded', () => {
       card.classList.add('active');
       
       // Scroll thumb into view
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (shouldScroll) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
       
       activeImg.style.opacity = '1';
     }, 150);
   };
 
-  const filterGallery = (filterValue) => {
+  const filterGallery = (filterValue, shouldScroll = true) => {
     activeVisibleThumbs = [];
     
     thumbCards.forEach(card => {
@@ -461,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Select first card in filtered list
     if (activeVisibleThumbs.length > 0) {
-      updateGalleryViewport(activeVisibleThumbs[0]);
+      updateGalleryViewport(activeVisibleThumbs[0], shouldScroll);
     }
   };
 
@@ -527,7 +548,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Initialize gallery view
-  filterGallery('all');
+  filterGallery('all', false);
 
   // ==========================================================================
   // About Section — Auto-Fading Slideshow Controller
